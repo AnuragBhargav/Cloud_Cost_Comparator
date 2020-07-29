@@ -30,7 +30,7 @@ dt_tym = now.strftime("%Y-%m-%d %H:%M:%S")
 mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="Anurag@123",
+        passwd="",
         database="AWS"
     )
 mycursor = mydb.cursor()
