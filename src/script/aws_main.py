@@ -5,8 +5,8 @@ import mysql.connector
 from datetime import datetime
 
 session = boto3.Session(
-    aws_access_key_id="AKIA4TFPTNUIO7B3A3YM",
-    aws_secret_access_key="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",
+    aws_access_key_id="",
+    aws_secret_access_key="",
     region_name="us-east-1"
 )
 
