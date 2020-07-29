@@ -5,3 +5,7 @@ Lib
 Scripts
 tcl
 .idea
+
+
+# Files
+.env

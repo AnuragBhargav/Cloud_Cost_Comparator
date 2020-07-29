@@ -1,12 +1,19 @@
+import os
+from os.path import join, dirname, abspath
+from dotenv import load_dotenv
 import boto3
 import json
 import pprint
 import mysql.connector
 from datetime import datetime
 
+# dot env configuration
+dotenv_path = abspath(join(dirname(__file__), '.env'))
+load_dotenv(dotenv_path)
+
 session = boto3.Session(
-    aws_access_key_id="",
-    aws_secret_access_key="",
+    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
     region_name="us-east-1"
 )
 
@@ -29,8 +36,8 @@ dt_tym = now.strftime("%Y-%m-%d %H:%M:%S")
 
 mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        passwd="",
+        user=os.environ.get("DB_USERNAME"),
+        passwd=os.environ.get("DB_PASSWORD"),
         database="AWS"
     )
 mycursor = mydb.cursor()

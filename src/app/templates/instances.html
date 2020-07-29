@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compare Instances</title>
+
+    <!--    bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h3 class="col-sm-12">Select the instance properties</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="">
+                    <div class="form-group">
+                        <label>No of Instance</label>
+                        <input type="number" class="form-control" id="no-of-instance">
+                    </div>
+                    <div class="form-group">
+                        <label>Select the OS</label>
+                        <input type="number" class="form-control" id="os-name">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Requeried CPU Cores</label>
+                                <input type="number" class="form-control" id="cpus">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Requeried Memory in GB</label>
+                                <input type="number" class="form-control" id="memory">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Average hours per day instance are running</label>
+                                <input type="number" min="1" max="24" class="form-control" id="avg-hours-per-day">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Average days per week instance are running</label>
+                                <input type="number" min="1" max="7" class="form-control" id="avg-days-per-week">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

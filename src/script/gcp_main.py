@@ -1,8 +1,17 @@
-
+import os
+from os.path import join, dirname, abspath
+from dotenv import load_dotenv
 from datetime import datetime
 import requests
 import re
 import mysql.connector
+
+#
+# dot env configuration
+#
+dotenv_path = abspath(join(dirname(__file__), '..', '.env'))
+load_dotenv(dotenv_path)
+
 
 now = datetime.now()
 
@@ -32,8 +41,8 @@ region=['us', 'us-central1', 'us-east1', 'us-east4', 'us-west4', 'us-west1', 'us
 
 mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        passwd="root",                  # Change this password
+        user=os.environ.get("DB_USERNAME"),
+        passwd=os.environ.get("DB_PASSWORD"),
         database="GCP"
     )
 mycursor = mydb.cursor()
