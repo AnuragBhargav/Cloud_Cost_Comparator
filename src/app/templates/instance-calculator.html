@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GCP vs AWS Price for Instance</title>
+
+    <!--    bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            {% for cloud in html_data %}
+            <div class="col-sm-4">
+                <h3>{{cloud.cloudName}}</h3>
+                <h6>Price: {{cloud.price}}</h6>
+                <h5>Available {{cloud.cloudName}} Instance: {{cloud.details.machine_type}}</h5>
+                <h5>
+                    <i>Memory</i> : {{cloud.details.memory}}
+                </h5>
+                <h5>
+                    <i>CPU</i> : {{cloud.details.vcpus}}
+                </h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

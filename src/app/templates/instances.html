@@ -15,27 +15,28 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <form action="">
+
+                <form action="/instanceCalculator" method="POST">
                     <div class="form-group">
                         <label>No of Instance</label>
-                        <input type="number" class="form-control" id="no-of-instance">
+                        <input type="number" class="form-control" name="no-of-instances">
                     </div>
                     <div class="form-group">
                         <label>Select the OS</label>
-                        <input type="number" class="form-control" id="os-name">
+                        <input type="number" class="form-control" id="os-name" name="os-name">
                     </div>
 
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Requeried CPU Cores</label>
-                                <input type="number" class="form-control" id="cpus">
+                                <input type="number" class="form-control" id="vcpus" name="vcpus">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Requeried Memory in GB</label>
-                                <input type="number" class="form-control" id="memory">
+                                <input type="number" class="form-control" id="memory" name="memory">
                             </div>
                         </div>
                     </div>
@@ -44,18 +45,20 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Average hours per day instance are running</label>
-                                <input type="number" min="1" max="24" class="form-control" id="avg-hours-per-day">
+                                <input type="number" min="1" max="24" class="form-control" id="avg-hours-per-day" name="avg-hours-per-day">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Average days per week instance are running</label>
-                                <input type="number" min="1" max="7" class="form-control" id="avg-days-per-week">
+                                <input type="number" min="1" max="7" class="form-control" id="avg-days-per-week" name="avg-days-per-week">
                             </div>
                         </div>
                     </div>
 
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+
             </div>
         </div>
     </div>

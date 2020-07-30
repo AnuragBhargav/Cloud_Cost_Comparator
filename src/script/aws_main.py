@@ -8,7 +8,7 @@ import mysql.connector
 from datetime import datetime
 
 # dot env configuration
-dotenv_path = abspath(join(dirname(__file__), '.env'))
+dotenv_path = abspath(join(dirname(__file__), '..', '.env'))
 load_dotenv(dotenv_path)
 
 session = boto3.Session(
