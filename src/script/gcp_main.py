@@ -5,6 +5,7 @@ from datetime import datetime
 import requests
 import re
 import mysql.connector
+from mysql.connector import Error
 
 #
 # dot env configuration
@@ -49,11 +50,20 @@ mycursor = mydb.cursor()
 
 for i in machine_types:
     for j in region:
-        print(i)
-        print(j)
-        print(ruc['gcp_price_list']['{}'.format(i)]["{}".format(j)])
-        sql = "INSERT into instances (date,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s)"
-        val = (dt_tym,i,j,ruc['gcp_price_list']['{}'.format(i)]["{}".format(j)])
-        mycursor.execute(sql, val)
-        mydb.commit()
+        try:
+            print(i)
+            print(j)
+            cost_p = ruc['gcp_price_list']['{}'.format(i)]["{}".format(j)]
+            cores_p = ruc['gcp_price_list']['{}'.format(i)]["cores"]
+            memory_p = ruc['gcp_price_list']['{}'.format(i)]["memory"]
+            print(ruc['gcp_price_list']['{}'.format(i)]["{}".format(j)])
+            print(ruc['gcp_price_list']['{}'.format(i)]["cores"])
+            print(ruc['gcp_price_list']['{}'.format(i)]["memory"])
+            sql = "INSERT into instances (date,machine_type,region,cores,memory_c,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s)"
+            val = (dt_tym,i,j,cores_p,memory_p,cost_p)
+            mycursor.execute(sql, val)
+            mydb.commit()
+        except Error as e:
+            print(e)
+            pass
 

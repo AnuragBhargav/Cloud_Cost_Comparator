@@ -6,6 +6,7 @@ import json
 import pprint
 import mysql.connector
 from datetime import datetime
+from mysql.connector import Error
 
 # dot env configuration
 dotenv_path = abspath(join(dirname(__file__), '..', '.env'))
@@ -101,5 +102,7 @@ for r in range(500):
             mydb.commit()
             print(r)
 
-    except:
+
+    except Error as e:
+        print(e)
         pass
