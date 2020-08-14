@@ -10,6 +10,7 @@
 <body>
     <div class="container">
         <div class="row">
+
             {% for cloud in html_data %}
             <div class="col-sm-4">
                 <h3>{{cloud.cloudName}}</h3>
@@ -20,6 +21,9 @@
                 </h5>
                 <h5>
                     <i>CPU</i> : {{cloud.details.vcpus}}
+                </h5>
+                <h5>
+                    <i>Region</i> : {{cloud.details.region}}
                 </h5>
             </div>
             {% endfor %}

@@ -6,6 +6,9 @@ Scripts
 tcl
 .idea
 
+# Python cached folders
+__pycache__
+
 
 # Files
 .env

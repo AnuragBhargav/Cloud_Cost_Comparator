@@ -50,7 +50,15 @@ for r in range(500):
         lo = json.loads(response["PriceList"][r])
         # print(type(lo))
 
-        memory_c = lo["product"]["attributes"]["memory"]
+        temp_mem = lo["product"]["attributes"]["memory"].split(" ")
+
+        # Removing N/A and assigning memory_c value
+        print(temp_mem)
+        if temp_mem[0] == "NA":
+            memory_c = 0
+        else:
+            memory_c = temp_mem[0]
+
         v_cpu = lo["product"]["attributes"]["vcpu"]
         instance_type = lo["product"]["attributes"]["instanceType"]
         location = lo["product"]["attributes"]["location"]
@@ -96,13 +104,13 @@ for r in range(500):
             print(t,memory_c,v_cpu,instance_type,location,price_usd)
 
 
-            sql = "INSERT into instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT into dev_instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             val = (dt_tym, t, memory_c, v_cpu,instance_type,location,price_usd)
             mycursor.execute(sql, val)
             mydb.commit()
             print(r)
 
 
-    except Error as e:
-        print(e)
+    except :
+        # print(e)
         pass

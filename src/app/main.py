@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request
-import os
 
-import mysql.connector
-from mysql.connector import Error
+from src.app.database.instances import aws, gcp
 
 
 app = Flask(__name__)
@@ -16,6 +14,7 @@ def homepage():
 @app.route("/instanceCalculator", methods=["POST"])
 def instance_calculator():
     instance_details = request.form
+
     html_data = [
         {
             "cloudName": "GCP",
@@ -29,38 +28,45 @@ def instance_calculator():
         }
     ]
 
-    #
-    # Connect to DB
-    #
-    try:
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user=os.environ.get("DB_USERNAME"),
-            passwd=os.environ.get("DB_PASSWORD"),
-            database="AWS"
-        )
-        mycursor = mydb.cursor()
+    cloud_regions = {
+        "GCP": {
+            "US Central": ["us", "us", "us-central1"],
+            "US East": ["us-east", "us-east1", "us-east4"],
+            "US West": ["us-west", "us-west1", "us-west2", "us-west3", "us-west4"],
+        },
+        "AWS": {
+            "US Central": ["US Central"],
+            "US East": ["US East", "US East (Ohio)", "US East (Northern Virginia)", "GovCloud (US-East)"],
+            "US West": ["US West", "US West (Oregon)", "US West (Northern California)", "GovCloud (US-West)"],
+        },
+        "AZURE": {}
+    }
 
-        mycursor.execute("SELECT * FROM instances WHERE memory_in>={0} && vcpu >= {1} && cost_per_hr!=0 ORDER BY memory_in ASC LIMIT 1".format(instance_details["memory"], instance_details["vcpus"]))
-        row = mycursor.fetchone()
-        print(row)
+    aws_region = cloud_regions["AWS"][instance_details["region"]][0]
+    gcp_region = cloud_regions["GCP"][instance_details["region"]][0]
 
-        html_data[1]["price"] = float(instance_details["no-of-instances"]) * float(instance_details["avg-days-per-week"]) * (float(instance_details["avg-hours-per-day"]) * float(row[-1]))
+    aws_instances_details = aws.get_instance_details(instance_details, aws_region)
+    gcp_instances_details = gcp.get_instance_details(instance_details, gcp_region)
 
-        html_data[1]["details"] = {
-            "type_m": row[1],
-            "memory": row[2],
-            "vcpus": row[3],
-            "machine_type": row[4],
-            "region": row[5]
-        }
+    # print(aws_instances_details)
+    # print(gcp_instances_details)
 
-    except Error as e:
-        print(e)
+    html_data[0]["price"] = float(instance_details["no-of-instances"]) * float(instance_details["avg-days-per-week"]) * (float(instance_details["avg-hours-per-day"]) * float(gcp_instances_details[-1]))
+    html_data[1]["price"] = float(instance_details["no-of-instances"]) * float(instance_details["avg-days-per-week"]) * (float(instance_details["avg-hours-per-day"]) * float(aws_instances_details[-1]))
 
-    finally:
-        if mydb is not None and mydb.is_connected():
-            mydb.close()
+    html_data[0]["details"] = {
+        "machine_type": gcp_instances_details[1],
+        "memory": gcp_instances_details[4],
+        "vcpus": gcp_instances_details[3],
+        "region": gcp_instances_details[2]
+    }
+
+    html_data[1]["details"] = {
+        "memory": aws_instances_details[2],
+        "vcpus": aws_instances_details[3],
+        "machine_type": aws_instances_details[4],
+        "region": aws_instances_details[5]
+    }
 
     return render_template("instance-calculator.html", html_data=html_data)
 
