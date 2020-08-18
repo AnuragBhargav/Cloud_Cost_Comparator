@@ -6,27 +6,78 @@
 
     <!--    bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <div class="row">
 
-            {% for cloud in html_data %}
-            <div class="col-sm-4">
-                <h3>{{cloud.cloudName}}</h3>
-                <h6>Price: {{cloud.price}}</h6>
-                <h5>Available {{cloud.cloudName}} Instance: {{cloud.details.machine_type}}</h5>
-                <h5>
-                    <i>Memory</i> : {{cloud.details.memory}}
-                </h5>
-                <h5>
-                    <i>CPU</i> : {{cloud.details.vcpus}}
-                </h5>
-                <h5>
-                    <i>Region</i> : {{cloud.details.region}}
-                </h5>
+    <!--    font-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body style="font-family: 'Roboto', sans-serif;">
+    <div class="container">
+
+        <div class="row" style="justify-content: center; text-align: center">
+            {% for cloud in cloud_names %}
+            <div class="col-sm-5" style="padding: 12px; margin: 16px 16px 12px 16px; box-shadow: 0px 4px 24px -6px #b2b6ce; border: 2px solid #5454ff; border-radius: 12px; text-align: center; font-size: 20px; font-weight: 700">
+                {{cloud}}
             </div>
             {% endfor %}
+        </div>
+
+
+        <div class="row" style="justify-content: center">
+
+            {% for cloud in html_data %}
+            <div class="col-sm-5" style="padding: 24px; margin: 16px 16px 12px 16px; box-shadow: 0px 4px 24px -6px #b2b6ce; border: 2px solid #5454ff; border-radius: 12px">
+
+                <div class="row" style="font-size: 17px">
+
+                    <div class="col-sm-12" style="padding: 24px 6px 6px 6px">
+                        <div class="row">
+                            <div class="col-sm-6" style="font-weight: 600">Available {{cloud.cloudName}} Instance:</div>
+                            <div class="col-sm-6">{{cloud.details.machine_type}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding: 6px">
+                        <div class="row">
+                            <div class="col-sm-6" style="font-weight: 600">Memory (GB) :</div>
+                            <div class="col-sm-6">{{cloud.details.memory}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding: 6px">
+                        <div class="row">
+                            <div class="col-sm-6" style="font-weight: 600">CPU's:</div>
+                            <div class="col-sm-6">{{cloud.details.vcpus}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding: 6px">
+                        <div class="row">
+                            <div class="col-sm-6" style="font-weight: 600">{{cloud.cloudName}} Region:</div>
+                            <div class="col-sm-6">{{cloud.details.region}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding: 6px">
+                        <div class="row">
+                            <div class="col-sm-6" style="font-weight: 600">Cost Per Hour ($)</div>
+                            <div class="col-sm-6">{{cloud.details.cost_per_hr}}</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row" style="justify-content: center; text-align: center">
+
+            {% for price in price %}
+                <div class="col-sm-5" style="padding: 16px; margin: 16px; box-shadow: 0px 4px 24px -6px #b2b6ce; border: 2px solid #5454ff; border-radius: 12px">
+                    <div class="row">
+                        <div class="col-sm-6" style="font-weight: 600; font-size: 14px">Estimated Price per Month ($):</div>
+                        <div class="col-sm-6">{{price}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+
         </div>
     </div>
 </body>

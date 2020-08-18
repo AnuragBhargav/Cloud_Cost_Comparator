@@ -6,24 +6,39 @@
 
     <!--    bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!--    font-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        .form-control:focus {
+            border: 2px solid blue;
+        }
+    </style>
 </head>
-<body>
+<body style="font-family: 'Roboto', sans-serif;">
     <div class="container">
         <div class="row">
-            <h3 class="col-sm-12">Select the instance properties</h3>
+            <div class="col-sm-12" style="padding:24px; text-align: center">
+                <div class="h2" >Cloud Cost Comparator</div>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" style="text-align: center; margin-bottom: 16px">
+                <div class="h4">Compare Virtual Machines</div>
+            </div>
 
-                <form action="/instanceCalculator" method="POST">
+            <div class="col-sm-12" style="max-width:62%; margin: auto">
+
+                <form action="/instanceResult" method="POST">
                     <div class="form-group">
                         <label>No of Instance</label>
-                        <input type="number" class="form-control" name="no-of-instances">
+                        <input type="number" min="0" class="form-control shadow-none" name="no-of-instances">
                     </div>
                     <div class="form-group">
                         <label>Select the Region</label>
-                        <select class="form-control" id="region" name="region">
+                        <select class="form-control shadow-none" id="region" name="region">
                             <option selected>Choose One</option>
                             <option>US Central</option>
 <!--                            <option>US North</option>-->
@@ -37,13 +52,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Requeried CPU Cores</label>
-                                <input type="number" class="form-control" id="vcpus" name="vcpus">
+                                <input type="number" class="form-control shadow-none" id="vcpus" name="vcpus">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Requeried Memory in GB</label>
-                                <input type="number" class="form-control" id="memory" name="memory">
+                                <input type="number" class="form-control shadow-none" id="memory" name="memory">
                             </div>
                         </div>
                     </div>
@@ -52,18 +67,19 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Average hours per day instance are running</label>
-                                <input type="number" min="1" max="24" class="form-control" id="avg-hours-per-day" name="avg-hours-per-day">
+                                <input type="number" min="1" max="24" class="form-control shadow-none" id="avg-hours-per-day" name="avg-hours-per-day">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Average days per week instance are running</label>
-                                <input type="number" min="1" max="7" class="form-control" id="avg-days-per-week" name="avg-days-per-week">
+                                <input type="number" min="1" max="7" class="form-control shadow-none" id="avg-days-per-week" name="avg-days-per-week">
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn-primary" style="width: 64%">Submit</button>
+                    </div>
                 </form>
 
             </div>

@@ -59,7 +59,9 @@ for i in machine_types:
             print(ruc['gcp_price_list']['{}'.format(i)]["{}".format(j)])
             print(ruc['gcp_price_list']['{}'.format(i)]["cores"])
             print(ruc['gcp_price_list']['{}'.format(i)]["memory"])
-            sql = "INSERT into dev_instances (date,machine_type,region,cores,memory_c,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s)"
+
+
+            sql = "INSERT into instances (date,machine_type,region,vcpu,memory_in,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s)"
             val = (dt_tym,i,j,cores_p,memory_p,cost_p)
             mycursor.execute(sql, val)
             mydb.commit()

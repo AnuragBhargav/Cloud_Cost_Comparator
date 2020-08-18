@@ -72,7 +72,6 @@ for r in range(500):
             terms_list.append(i)
         # print(terms_list)
 
-
         for t in terms_list:
 
             # print(lo["terms"]["OnDemand"])
@@ -85,7 +84,6 @@ for r in range(500):
             # print(keys_list_c)
 
             keys_list_index_c = keys_list_c[0]
-
 
             key_d = lo["terms"][t][keys_list_index_c]["priceDimensions"].keys()
 
@@ -104,7 +102,7 @@ for r in range(500):
             print(t,memory_c,v_cpu,instance_type,location,price_usd)
 
 
-            sql = "INSERT into dev_instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT into instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             val = (dt_tym, t, memory_c, v_cpu,instance_type,location,price_usd)
             mycursor.execute(sql, val)
             mydb.commit()

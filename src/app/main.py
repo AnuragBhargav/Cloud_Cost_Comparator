@@ -6,27 +6,30 @@ from src.app.database.instances import aws, gcp
 app = Flask(__name__)
 
 
+
 @app.route("/")
 def homepage():
     return render_template("instances.html")
 
 
-@app.route("/instanceCalculator", methods=["POST"])
+@app.route("/instanceResult", methods=["POST"])
 def instance_calculator():
     instance_details = request.form
+
+    cloud_names = ["GCP", "AWS"]
 
     html_data = [
         {
             "cloudName": "GCP",
-            "price": "",
             "details": {}
         },
         {
             "cloudName": "AWS",
-            "price": "",
             "details": {}
         }
     ]
+
+    cloud_prices = [0, 0]
 
     cloud_regions = {
         "GCP": {
@@ -36,8 +39,10 @@ def instance_calculator():
         },
         "AWS": {
             "US Central": ["US Central"],
-            "US East": ["US East", "US East (Ohio)", "US East (Northern Virginia)", "GovCloud (US-East)"],
-            "US West": ["US West", "US West (Oregon)", "US West (Northern California)", "GovCloud (US-West)"],
+
+            # US E and US W are used to search the data in db
+            "US East": ["US E", "US East (Ohio)", "US East (Northern Virginia)", "GovCloud (US-East)"],
+            "US West": ["US W", "US West (Oregon)", "US West (Northern California)", "GovCloud (US-West)"],
         },
         "AZURE": {}
     }
@@ -48,27 +53,31 @@ def instance_calculator():
     aws_instances_details = aws.get_instance_details(instance_details, aws_region)
     gcp_instances_details = gcp.get_instance_details(instance_details, gcp_region)
 
-    # print(aws_instances_details)
-    # print(gcp_instances_details)
+    print(aws_instances_details)
+    print(gcp_instances_details)
 
-    html_data[0]["price"] = float(instance_details["no-of-instances"]) * float(instance_details["avg-days-per-week"]) * (float(instance_details["avg-hours-per-day"]) * float(gcp_instances_details[-1]))
-    html_data[1]["price"] = float(instance_details["no-of-instances"]) * float(instance_details["avg-days-per-week"]) * (float(instance_details["avg-hours-per-day"]) * float(aws_instances_details[-1]))
+    per_day_usage = ((float(instance_details["avg-days-per-week"]) * float(instance_details["avg-hours-per-day"])) * 4) / 28
+
+    cloud_prices[0] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(gcp_instances_details[-1]), 3)
+    cloud_prices[1] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(aws_instances_details[-1]), 3)
 
     html_data[0]["details"] = {
         "machine_type": gcp_instances_details[1],
         "memory": gcp_instances_details[4],
         "vcpus": gcp_instances_details[3],
-        "region": gcp_instances_details[2]
+        "region": gcp_instances_details[2],
+        "cost_per_hr": gcp_instances_details[-1]
     }
 
     html_data[1]["details"] = {
         "memory": aws_instances_details[2],
         "vcpus": aws_instances_details[3],
         "machine_type": aws_instances_details[4],
-        "region": aws_instances_details[5]
+        "region": aws_instances_details[5],
+        "cost_per_hr": aws_instances_details[-1]
     }
 
-    return render_template("instance-calculator.html", html_data=html_data)
+    return render_template("instance-calculator.html", html_data=html_data, price=cloud_prices, cloud_names=cloud_names)
 
 
 if __name__ == "__main__":
