@@ -59,6 +59,7 @@ for r in range(500):
         else:
             memory_c = temp_mem[0]
 
+        operating_system = lo["product"]["attributes"]["operatingSystem"]
         v_cpu = lo["product"]["attributes"]["vcpu"]
         instance_type = lo["product"]["attributes"]["instanceType"]
         location = lo["product"]["attributes"]["location"]
@@ -102,8 +103,8 @@ for r in range(500):
             print(t,memory_c,v_cpu,instance_type,location,price_usd)
 
 
-            sql = "INSERT into instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-            val = (dt_tym, t, memory_c, v_cpu,instance_type,location,price_usd)
+            sql = "INSERT into instances (date,type_m,memory_in,vcpu,machine_type,region,cost_per_hr,os) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+            val = (dt_tym, t, memory_c, v_cpu,instance_type,location,price_usd,operating_system)
             mycursor.execute(sql, val)
             mydb.commit()
             print(r)

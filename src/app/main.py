@@ -58,8 +58,8 @@ def instance_calculator():
 
     per_day_usage = ((float(instance_details["avg-days-per-week"]) * float(instance_details["avg-hours-per-day"])) * 4) / 28
 
-    cloud_prices[0] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(gcp_instances_details[-1]), 3)
-    cloud_prices[1] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(aws_instances_details[-1]), 3)
+    cloud_prices[0] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(gcp_instances_details[-2]), 3)
+    cloud_prices[1] = round(float(instance_details["no-of-instances"]) * per_day_usage * 30.41 * float(aws_instances_details[-2]), 3)
 
     html_data[0]["details"] = {
         "machine_type": gcp_instances_details[1],
@@ -74,7 +74,7 @@ def instance_calculator():
         "vcpus": aws_instances_details[3],
         "machine_type": aws_instances_details[4],
         "region": aws_instances_details[5],
-        "cost_per_hr": aws_instances_details[-1]
+        "cost_per_hr": aws_instances_details[-2]
     }
 
     return render_template("instance-calculator.html", html_data=html_data, price=cloud_prices, cloud_names=cloud_names)

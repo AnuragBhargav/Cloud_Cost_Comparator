@@ -19,7 +19,7 @@ def get_instance_details(instance_details, region):
         )
         mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT * FROM instances WHERE memory_in>={0} && vcpu >= {1} && region REGEXP '^{2}' && cost_per_hr!=0 ORDER BY memory_in ASC LIMIT 1".format(instance_details["memory"], instance_details["vcpus"], region))
+        mycursor.execute("SELECT * FROM instances WHERE memory_in>={0} && vcpu >= {1} && region REGEXP '^{2}' && cost_per_hr!=0 && os != 'Windows' ORDER BY memory_in ASC LIMIT 1".format(instance_details["memory"], instance_details["vcpus"], region))
 
         row = mycursor.fetchone()
 
